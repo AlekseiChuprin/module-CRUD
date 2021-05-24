@@ -1,0 +1,37 @@
+<?php
+/**
+ * @var \Study\Team\Block\Team $block
+ */
+
+
+//$block->delete();die();
+
+
+?>
+
+<h3>Teams</h3>
+
+<a href="/team/index/add">Add new team</a>
+
+<table>
+    <thead>
+    <th><?php echo __('id');?></th>
+    <th><?php echo __('name');?></th>
+    <th><?php echo __('country');?></th>
+    <th><?php echo __('actions');?></th>
+    </thead>
+    <tbody>
+    <tr>
+        <?php foreach($block->getTeams() as $team):?>
+        <td><?php echo $team->getId(); ?></td>
+        <td><?php echo $team->getName(); ?></td>
+        <td><?php echo $team->getCountry(); ?></td>
+        <td>
+            <a href="<?php echo $block->getUrl('team/index/delete', ['id' => $team->getId()]) ?>">DELETE</a>
+            <a href="<?php echo $block->getUrl('team/index/edit', ['id' => $team->getId()]) ?>">EDIT</a>
+        </td>
+    </tr>
+    <?endforeach; ?>
+    </tbody>
+</table>
+

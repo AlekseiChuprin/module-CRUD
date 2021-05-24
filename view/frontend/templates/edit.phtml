@@ -1,0 +1,35 @@
+<?php
+/**
+ * @var \Study\Team\Block\Team $block
+ */
+
+?>
+
+<div class="modal fade" id="edit" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Edit team</h5>
+            </div>
+            <div>
+                <form action="/team/index/update" method="GET"
+                <div class="form-group">
+                    <small>Id</small>
+                    <input type="hidden" name="id" value="<?php echo $block->getOneTeam()->getId()?>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <small>Name</small>
+                    <input type="text" name="name" value="<?php echo $block->getOneTeam()->getName()?>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <small>country</small>
+                    <input type="text" name="country" value="<?php echo $block->getOneTeam()->getCountry()?>" class="form-control">
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Save team</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
