@@ -5,28 +5,29 @@
 ?>
 
 
-
 <div class="modal fade" id="create" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Add new team</h5>
+                <h5><?php echo __('Add new team');?></h5>
             </div>
-            <div>
-                <form action="/team/index/save" method="GET""
+            <form action="<?php echo $block->getUrl('*/*/save'); ?>" method="POST">
+
+                <div>
                     <div class="form-group">
-                        <small>Name</small>
+                        <small><?php echo __('Name'); ?></small>
                         <input type="text" name="name" class="form-control">
                     </div>
                     <div class="form-group">
-                        <small>country</small>
+                        <small><?php echo __('Country');?></small>
                         <input type="text" name="country" class="form-control">
                     </div>
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Save team</button>
-                </form>
-            </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary"><?php echo __('Save team');?></button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>

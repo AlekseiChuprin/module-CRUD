@@ -14,10 +14,6 @@ class Add implements ActionInterface, HttpGetActionInterface
      */
     protected $_pageFactory;
 
-    /**
-     * @var \Study\Team\Model\TeamFactory
-     */
-    protected $teamFactory;
 
     /**
      * Add constructor.
@@ -26,12 +22,10 @@ class Add implements ActionInterface, HttpGetActionInterface
      */
     public function __construct(
         //\Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \Study\Team\Model\TeamFactory $teamFactory
+        \Magento\Framework\View\Result\PageFactory $pageFactory
     )
     {
         $this->_pageFactory = $pageFactory;
-        $this->teamFactory = $teamFactory;
         //parent::__construct($context);
     }
 

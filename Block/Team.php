@@ -6,25 +6,20 @@ namespace Study\Team\Block;
 
 class Team extends \Magento\Framework\View\Element\Template
 {
-    /**
-     * @var \Magento\Framework\View\Result\PageFactory
-     */
-    public $_pageFactory;
 
-    /**
-     * @var \Magento\Framework\App\RequestInterface
-     */
-    protected $request;
+
 
     /**
      * @var \Study\Team\Model\TeamFactory
      */
-    public $teamFactory;
+    protected $teamFactory;
 
     /**
      * @var \Study\Team\Model\ResourceModel\Team
      */
-    public $resourceTeam;
+    protected $resourceTeam;
+
+    protected $collection;
 
     /**
      * Team constructor.
@@ -35,17 +30,15 @@ class Team extends \Magento\Framework\View\Element\Template
      * @param \Magento\Framework\App\RequestInterface $request
      */
     public function __construct(
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
         \Study\Team\Model\TeamFactory $teamFactory,
         \Study\Team\Model\ResourceModel\Team $resourceTeam,
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Framework\App\RequestInterface $request
+        \Study\Team\Model\ResourceModel\Team\Collection $collection,
+        \Magento\Framework\View\Element\Template\Context $context
     )
     {
-        $this->_pageFactory = $pageFactory;
         $this->teamFactory = $teamFactory;
         $this->resourceTeam = $resourceTeam;
-        $this->request = $request;
+        $this->collection = $collection;
         parent::__construct($context);
     }
 
@@ -55,11 +48,7 @@ class Team extends \Magento\Framework\View\Element\Template
      */
     public function getTeams()
     {
-        $team = $this->teamFactory->create();
-        $collection = $team->getCollection();
-
-        return $collection;
-
+        return $this->collection;
     }
 
     /**
@@ -68,10 +57,18 @@ class Team extends \Magento\Framework\View\Element\Template
      */
     public function getOneTeam()
     {
-        $id = $this->request->getParam('id');
-        $emptyTeam = $this->teamFactory->create();
-        $this->resourceTeam->load($emptyTeam, $id);
+        $team = $this->teamFactory->create();
+        $this->resourceTeam->load($team, $this->getParamId());
 
-        return $emptyTeam;
+        return $team;
+    }
+
+    /**
+     * return team id
+     * @return mixed
+     */
+    protected function getParamId()
+    {
+        return $this->getRequest()->getParam('id');
     }
 }

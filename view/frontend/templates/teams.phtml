@@ -3,15 +3,11 @@
  * @var \Study\Team\Block\Team $block
  */
 
-
-//$block->delete();die();
-
-
 ?>
 
-<h3>Teams</h3>
+<h3><?php echo __('Teams');?></h3>
 
-<a href="/team/index/add">Add new team</a>
+<a href="<?php echo $block->getUrl('*/*/add'); ?>"><?php echo __('Add new team');?></a>
 
 <table>
     <thead>
@@ -23,12 +19,12 @@
     <tbody>
     <tr>
         <?php foreach($block->getTeams() as $team):?>
-        <td><?php echo $team->getId(); ?></td>
-        <td><?php echo $team->getName(); ?></td>
-        <td><?php echo $team->getCountry(); ?></td>
+        <td><?php echo $block->escapeHtml($team->getId()); ?></td>
+        <td><?php echo $block->escapeHtml($team->getName()); ?></td>
+        <td><?php echo $block->escapeHtml($team->getCountry()); ?></td>
         <td>
-            <a href="<?php echo $block->getUrl('team/index/delete', ['id' => $team->getId()]) ?>">DELETE</a>
-            <a href="<?php echo $block->getUrl('team/index/edit', ['id' => $team->getId()]) ?>">EDIT</a>
+            <a href="<?php echo $block->getUrl('*/*/delete', ['id' => $team->getId()]) ?>"><?php echo __('DELETE');?></a>
+            <a href="<?php echo $block->getUrl('*/*/edit', ['id' => $team->getId()]) ?>"><?php echo __('EDIT');?></a>
         </td>
     </tr>
     <?endforeach; ?>

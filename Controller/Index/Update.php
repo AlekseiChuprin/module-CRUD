@@ -6,6 +6,8 @@ namespace Study\Team\Controller\Index;
 
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ActionInterface;
+use Magento\Framework\Message\ManagerInterface as MessageManagerInterface;
+use Magento\Framework\Validation\ValidationException;
 
 class Update implements ActionInterface, HttpGetActionInterface
 {
@@ -34,6 +36,8 @@ class Update implements ActionInterface, HttpGetActionInterface
      */
     public $resultFactory;
 
+    protected $messageManager;
+
     /**
      * Update constructor.
      * @param \Magento\Framework\View\Result\PageFactory $pageFactory
@@ -48,7 +52,8 @@ class Update implements ActionInterface, HttpGetActionInterface
         \Study\Team\Model\TeamFactory $teamFactory,
         \Magento\Framework\App\RequestInterface $request,
         \Study\Team\Model\ResourceModel\Team $resourceTeam,
-        \Magento\Framework\Controller\ResultFactory $resultFactory
+        \Magento\Framework\Controller\ResultFactory $resultFactory,
+        MessageManagerInterface $messageManager
     )
     {
         $this->_pageFactory = $pageFactory;
@@ -56,6 +61,7 @@ class Update implements ActionInterface, HttpGetActionInterface
         $this->request = $request;
         $this->resourceTeam = $resourceTeam;
         $this->resultFactory = $resultFactory;
+        $this->messageManager = $messageManager;
         //parent::__construct($context);
     }
 
@@ -66,11 +72,21 @@ class Update implements ActionInterface, HttpGetActionInterface
     public function execute()
     {
         $id = $this->request->getParam('id');
-        $team = $this->teamFactory->create();
-        $this->resourceTeam->load($team, $id);
-        $data = $this->request->getParams();
-        $team->setData($data);
-        $this->resourceTeam->save($team);
+        try {
+            $team = $this->teamFactory->create();
+            $this->resourceTeam->load($team, $id);
+            $data = $this->request->getParams();
+            $team->addData($data);
+            $this->resourceTeam->save($team);
+            $this->messageManager->addSuccessMessage(__('Team updated successfully.'));
+
+        } catch (ValidationException $e){
+            $this->messageManager->addErrorMessage($e->getMessage());
+            $redirect = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT);
+            $redirect->setUrl("/team/index/edit/id/$id/");
+
+            return $redirect;
+        }
 
         return $this->resultFactory->create('redirect')->setPath('*/*/index');
     }

@@ -1,0 +1,13 @@
+{
+    "study_football_teams": {
+        "column": {
+            "id": true,
+            "name": true,
+            "country": true,
+            "description": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

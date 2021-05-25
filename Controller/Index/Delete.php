@@ -58,8 +58,11 @@ class Delete implements ActionInterface, HttpGetActionInterface
     {
         $id = $this->request->getParam('id');
         $teamEmptyModel = $this->teamFactory->create();
-        $this->resourceTeam->load($teamEmptyModel, $id)->delete($teamEmptyModel, $id);
+        $this->resourceTeam->load($teamEmptyModel, $id);
+        $this->resourceTeam->delete($teamEmptyModel);
 
         return $this->resultFactory->create('redirect')->setPath('*/*/index');
     }
+
+
 }
